@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class ListViewGuerrero extends AppCompatActivity {
+public class LlistGuerreroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_view_guerrero);
+        setContentView(R.layout.activity_llist_guerrero);
     }
 }
