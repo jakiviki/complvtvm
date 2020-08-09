@@ -24,27 +24,29 @@
         android:id="@+id/id_maestro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="45dp"
         android:layout_marginBottom="44dp"
+        android:background="@color/negro"
         android:text="Maestro"
+        android:onClick="homeCarmelo"
         android:textColor="@color/rojonegro"
         android:textSize="@dimen/dp30"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/negro"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/id_guerrero"
+        style="@android:style/Widget.DeviceDefault.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="45dp"
         android:layout_marginBottom="44dp"
+        android:background="@android:color/transparent"
+        android:onClick="clickGuerrero"
         android:text="@string/guerrero"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/rojonegro"
         android:textSize="@dimen/dp30"
-        android:background="@color/negro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
