@@ -8,40 +8,25 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListaDojoActivity extends AppCompatActivity {
 
     ListView listView;
-    ArrayList<UsuarioFecha> usuariosFechas;
+    ArrayList<Usuario> usuariosFechas;
     EditText editText;
     Button boton;
-    SharedPreferences sharedPreferences;
+    SharedPreferences mShared;
+    SharedPreferences.Editor editor;
+    Usuario nuevoUsuario;
+    ListUsuarios mListUsuarios;
+    Boolean mApuntado = false;
     int itemAsignado;
-    int horario0 = 0;
-    int horario1 = 1;
-    int horario2 = 2;
-    int horario3 = 3;
-    int horario4 = 4;
-    int horario5 = 5;
-    UsuarioFecha nuevoUsuario;
-    String nom0;
-    String nom1;
-    String nom2;
-    String nom3;
-    String nom4;
-    String nom5;
-    ArrayList<String> nombres2 = new ArrayList<>();
-    Boolean vacio = true;
 
 
     @SuppressLint("WrongViewCast")
@@ -52,19 +37,10 @@ public class ListaDojoActivity extends AppCompatActivity {
         editText = findViewById(R.id.id_edit_nom_dojo);
         boton = findViewById(R.id.id_boton_apun_dojo);
         listView = findViewById(R.id.id_lisView_apun_dojo);
-        //nuevoUsuario = new UsuarioFecha();
-        nombres2.add("javi");
-
 
         // recupero las sharedPreferences
-        sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);
-        nom0 = sharedPreferences.getString("nombre_clase0_dojo","");
-        nom1 = sharedPreferences.getString("nombre_clase1_dojo","");
-        nom2 = sharedPreferences.getString("nombre_clase2_dojo","");
-        nom3 = sharedPreferences.getString("nombre_clase3_dojo","");
-        nom4 = sharedPreferences.getString("nombre_clase4_dojo","");
-        nom5 = sharedPreferences.getString("nombre_clase5_dojo","");
-
+        mShared = getSharedPreferences("complutum",MODE_PRIVATE);  // lectura de disco
+        editor = mShared.edit();                                          // grabar en disco
 
         // recupero el intent
         Intent intent = getIntent();
@@ -72,49 +48,204 @@ public class ListaDojoActivity extends AppCompatActivity {
         Log.d("log","itemAsignado es: "+itemAsignado);
 
         usuariosFechas = new ArrayList<>();
-        usuariosFechas.add(new UsuarioFecha("Carmelo",R.drawable.iconojpg));
+        usuariosFechas.add(new Usuario("Carmelo",R.drawable.iconojpg));
 
+        // Instancio la variable listaUsuarios
+        mListUsuarios = new ListUsuarios();
 
-
-
-        if( horario0 == itemAsignado & !nom0.isEmpty()){
-            String nomUsuario = sharedPreferences.getString("nombre_clase0_dojo","");
-            usuariosFechas.add(new UsuarioFecha(nom0,R.drawable.iconojpg));
-            Log.d("log","registrado el usuario "+nomUsuario+" en el horario: "+itemAsignado);
-        }else{
-            if(horario1 == itemAsignado & !nom1.isEmpty()){
-                String nomUsuario = sharedPreferences.getString("nombre_clase1_dojo","");
-                usuariosFechas.add(new UsuarioFecha(nom1,R.drawable.iconojpg));
-                Log.d("log","registrado el usuario "+nomUsuario+" en el horario: "+itemAsignado);
-            }else{
-                if(horario2 == itemAsignado & !nom2.isEmpty()){
-                    String nomUsuario = sharedPreferences.getString("nombre_clase2_dojo","");
-                    usuariosFechas.add(new UsuarioFecha(nom2,R.drawable.iconojpg));
-                    Log.d("log","registrado el usuario "+nomUsuario+" en el horario: "+itemAsignado);
-                }else{
-                    if(horario3 == itemAsignado & !nom3.isEmpty()){
-                        String nomUsuario = sharedPreferences.getString("nombre_clase3_dojo","");
-                        usuariosFechas.add(new UsuarioFecha(nom3,R.drawable.iconojpg));
-                        Log.d("log","registrado el usuario "+nomUsuario+" en el horario: "+itemAsignado);
-                    }else{
-                        if(horario4 == itemAsignado & !nom4.isEmpty()){
-                            String nomUsuario = sharedPreferences.getString("nombre_clase4_dojo","");
-                            usuariosFechas.add(new UsuarioFecha(nom4,R.drawable.iconojpg));
-                            Log.d("log","registrado el usuario "+nomUsuario+" en el horario: "+itemAsignado);
-                        }else {
-                            if(horario5 == itemAsignado & !nom5.isEmpty()){
-                                String nomUsuario = sharedPreferences.getString("nombre_clase5_dojo","");
-                                usuariosFechas.add(new UsuarioFecha(nom5,R.drawable.iconojpg));
-                                Log.d("log","registrado el usuario "+nomUsuario+" en el horario: "+itemAsignado);
-                            }
-                        }
+        // usamos el swich para dar una clave diferente a las shared
+        switch (itemAsignado+1){
+            case 1:
+                // llamo a las shared para mostrarlas en el activity
+                String json = mShared.getString("clase1_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
                     }
                 }
-            }
+                break;
+            case 2:
+                // llamo a las shared para mostrarlas en el activity
+                String json2 = mShared.getString("clase2_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json2.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json2);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 3:
+
+                // llamo a las shared para mostrarlas en el activity
+                String json3 = mShared.getString("clase3_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json3.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json3);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 4:
+                // llamo a las shared para mostrarlas en el activity
+                String json4 = mShared.getString("clase4_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json4.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json4);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 5:
+                // llamo a las shared para mostrarlas en el activity
+                String json5 = mShared.getString("clase5_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json5.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json5);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 6:
+                // llamo a las shared para mostrarlas en el activity
+                String json6 = mShared.getString("clase6_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json6.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json6);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 7:
+                // llamo a las shared para mostrarlas en el activity
+                String json7 = mShared.getString("clase7_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json7.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json7);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 8:
+                // llamo a las shared para mostrarlas en el activity
+                String json8 = mShared.getString("clase8_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json8.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json8);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 9:
+                // llamo a las shared para mostrarlas en el activity
+                String json9 = mShared.getString("clase9_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json9.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json9);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 10:
+
+                // llamo a las shared para mostrarlas en el activity
+                String json10 = mShared.getString("clase10_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json10.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json10);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 11:
+                // llamo a las shared para mostrarlas en el activity
+                String json11 = mShared.getString("clase11_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json11.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json11);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 12:
+                // llamo a las shared para mostrarlas en el activity
+                String json12 = mShared.getString("clase12_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json12.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json12);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 13:
+                // llamo a las shared para mostrarlas en el activity
+                String json13 = mShared.getString("clase13_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json13.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json13);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 14:
+
+                // llamo a las shared para mostrarlas en el activity
+                String json14 = mShared.getString("clase14_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json14.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json14);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+                break;
+            case 15:
+                // llamo a las shared para mostrarlas en el activity
+                String json15 = mShared.getString("clase15_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json15.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json15);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            case 16:
+                // llamo a las shared para mostrarlas en el activity
+                String json16 = mShared.getString("clase16_dojo","");
+                // miro si viene lleno y lo añado a la lista
+                if ( !json16.isEmpty()){
+                    mListUsuarios= mListUsuarios.fromJson(json16);
+                    for(Usuario u: mListUsuarios.mListUsuarios){
+                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                    }
+                }
+
+                break;
+            default:
+                Toast.makeText(this,"No hay mas clases",Toast.LENGTH_LONG).show();
+                break;
         }
-
-
-
 
 
 
@@ -126,86 +257,174 @@ public class ListaDojoActivity extends AppCompatActivity {
 
     // metodo para añadir a la lista el nombre y el item de las shared
     public void agregar(View v) {
+        // cojo el usuario escrito y lo añado en la lista sin escribir en el disco
+        String nombre = editText.getText().toString();
 
-        // valido si estoy en otro horario si son diferntes creo una nueva shared con otro numero
-        if (horario0 == itemAsignado){
-            String nombre = editText.getText().toString();
-            nuevoUsuario = new UsuarioFecha(nombre, R.drawable.iconojpg);
+        // compruebo que ya te has apuntado
+        if(mApuntado){
+            Toast.makeText(this,nombre+" ya te has apuntado",Toast.LENGTH_LONG).show();
+        }
+
+
+        if(!mApuntado && !nombre.isEmpty()) {
+            nuevoUsuario = new Usuario(nombre, R.drawable.iconojpg);
             usuariosFechas.add(nuevoUsuario);
-            // shared para guardar el intem y el nombre
-            sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("nombre_clase0_dojo", nombre);
-            editor.apply();
-            Toast.makeText(this,"Te has apuntado a esta clase"+itemAsignado,Toast.LENGTH_LONG).show();
-        }else{
-            if(horario1 == itemAsignado){
-                String nombre = editText.getText().toString();
-                nuevoUsuario = new UsuarioFecha(nombre, R.drawable.iconojpg);
-                usuariosFechas.add(nuevoUsuario);
-                // shared para guardar el intem y el nombre
-                sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("nombre_clase1_dojo", nombre);
-                // editor.putInt("shared_item_uno", itemAsignado);
-                editor.apply();
-                Toast.makeText(this,"Te has apuntado a esta clase"+itemAsignado,Toast.LENGTH_LONG).show();
 
-            }else{
-                if(horario2 == itemAsignado){
-                    String nombre = editText.getText().toString();
-                    nuevoUsuario = new UsuarioFecha(nombre, R.drawable.iconojpg);
-                    usuariosFechas.add(nuevoUsuario);
-                    // shared para guardar el intem y el nombre
-                    sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("nombre_clase2_dojo", nombre);
-                    // editor.putInt("shared_item_uno", itemAsignado);
+            // usamos el swich para dar una clave diferente a las shared
+            switch (itemAsignado+1){
+                case 1:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase1_dojo", mListUsuarios.toJson());
                     editor.apply();
-                    Toast.makeText(this,"Te has apuntado a esta clase"+itemAsignado,Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+                    break;
+                case 2:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase2_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
 
-                }else{
-                    if(horario3 == itemAsignado){
-                        String nombre = editText.getText().toString();
-                        nuevoUsuario = new UsuarioFecha(nombre, R.drawable.iconojpg);
-                        usuariosFechas.add(nuevoUsuario);
-                        // shared para guardar el intem y el nombre
-                        sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("nombre_clase3_dojo", nombre);
-                        // editor.putInt("shared_item_uno", itemAsignado);
-                        editor.apply();
-                        Toast.makeText(this,"Te has apuntado a esta clase"+itemAsignado,Toast.LENGTH_LONG).show();
+                    break;
+                case 3:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase3_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
 
-                    }else{
-                        if(horario4 == itemAsignado){
-                            String nombre = editText.getText().toString();
-                            nuevoUsuario = new UsuarioFecha(nombre, R.drawable.iconojpg);
-                            usuariosFechas.add(nuevoUsuario);
-                            // shared para guardar el intem y el nombre
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("nombre_clase4_dojo", nombre);
-                            // editor.putInt("shared_item_uno", itemAsignado);
-                            editor.apply();
-                            Toast.makeText(this,"Te has apuntado a esta clase"+itemAsignado,Toast.LENGTH_LONG).show();
+                    break;
+                case 4:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase4_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
 
-                        }else {
-                            if(horario5 == itemAsignado){
-                                String nombre = editText.getText().toString();
-                                nuevoUsuario = new UsuarioFecha(nombre, R.drawable.iconojpg);
-                                usuariosFechas.add(nuevoUsuario);
-                                // shared para guardar el intem y el nombre
-                                sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("nombre_clase5_dojo", nombre);
-                                // editor.putInt("shared_item_uno", itemAsignado);
-                                editor.apply();
-                                Toast.makeText(this,"Te has apuntado a esta clase"+itemAsignado,Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                }
+                    break;
+                case 5:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase5_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 6:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase6_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 7:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase7_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 8:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase8_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 9:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase9_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 10:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase10_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 11:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase11_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 12:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase12_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 13:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase13_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 14:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase14_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 15:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase15_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                case 16:
+                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
+                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                    editor.putString("clase16_dojo", mListUsuarios.toJson());
+                    editor.apply();
+                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
+                    mApuntado = true;
+
+                    break;
+                default:
+                    Toast.makeText(this,"No hay mas clases",Toast.LENGTH_LONG).show();
+                    break;
+            }
+
+        }else {
+            if(nombre.isEmpty()){
+                Toast.makeText(this,"Tienes que escribír tu nombre",Toast.LENGTH_LONG).show();
             }
         }
+
     }
 }

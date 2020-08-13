@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/aforo"
+        android:text="@string/aforo1"
         android:textSize="@dimen/sp25"
         app:layout_constraintStart_toEndOf="@+id/id_fecha_text"
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/n_aforo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
@@ -73,7 +73,7 @@
         android:layout_marginStart="@dimen/dp_10"
         android:text="@string/personas"
         android:textSize="@dimen/sp25"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/n_aforo"
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

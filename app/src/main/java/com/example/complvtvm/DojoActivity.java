@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -24,6 +25,9 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView listView;
     ArrayList<String> horarios;
     SharedPreferences sharedPreferences;
+    SharedPreferences mAforoCarmelo,mHorarioCarmelo;
+    TextView mTexvAforo;
+    ListadoDeHoras listaHoras;
     int item;
 
     int clase0 = 0;
@@ -39,16 +43,32 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
 
         boton = findViewById(R.id.id_botonDojo);
         listView = findViewById(R.id.id_lisView_mma);
+        horarios = new ArrayList<>();
+
         sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);// SOLO ES LA INSTANCIA
 
-        horarios = new ArrayList<>();
-        horarios.add("9:00");
-        horarios.add("17:30");
-        horarios.add("18:30");
-        horarios.add("19:30");
-        horarios.add("20:30");
-        horarios.add("21:30");
-        horarios.add("22:30");
+        // LOGICA PARA EL AFORO DE CARMELO
+        mTexvAforo = findViewById(R.id.n_aforo_dojo);
+        mAforoCarmelo = getSharedPreferences("complutum",MODE_PRIVATE);
+        String aforo = mAforoCarmelo.getString("aforo","8");
+        mTexvAforo.setText(aforo);
+
+        // LOGICA PARA LOS HORARIOS DE CARMELO
+        mHorarioCarmelo = getSharedPreferences("complutum",MODE_PRIVATE);
+        String json = mHorarioCarmelo.getString("horarios_shared","");
+        if(json.isEmpty()){
+            horarios.add("8:30");
+        }else{
+            listaHoras = new ListadoDeHoras();
+            listaHoras = listaHoras.fromJson(json);
+            for(Hora h: listaHoras.mListHorarios){
+                horarios.add(h.getHora());
+            }
+
+        }
+
+
+
 
         // 1 creamos el adapter
         ListAdapter adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,horarios);
@@ -67,8 +87,7 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ///String horaintem = listView.getAdapter().getItem(i).toString();
-
+        /*
         if( clase0 == i){
             // guardo la hora en las shares
             //SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -112,7 +131,7 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
 
-
+        */
         // mando las horas por intent por el intent
         Intent intent = new Intent(this,ListaDojoActivity.class);
         //intent.putExtra("hora_intent",horarios.get(i));
@@ -120,6 +139,6 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtra("item",item);
         startActivity(intent);
         Log.d("log","valor del item: "+item);
-        Toast.makeText(this,"valor de item: "+item,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Clase: "+(item+1),Toast.LENGTH_LONG).show();
     }
 }

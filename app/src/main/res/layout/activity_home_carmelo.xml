@@ -25,12 +25,12 @@
         android:id="@+id/btn_añadir_carmelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Añadir"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         android:onClick="añadirHorarioCarmelo"
+        android:text="@string/añadir_horario"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listv_horarios_carmelo" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
         android:id="@+id/listv_horarios_carmelo"
@@ -41,4 +41,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txv_horarios_carmelo" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="añadirAforoCarmelo"
+        android:text="@string/aforo2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_añadir_carmelo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

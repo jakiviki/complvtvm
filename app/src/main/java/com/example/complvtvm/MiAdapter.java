@@ -18,9 +18,9 @@ public class MiAdapter extends ArrayAdapter {
 
     Context context;
     int imagenLayout;
-    ArrayList<UsuarioFecha> usuarioFecha;
+    ArrayList<Usuario> usuarioFecha;
 
-    public MiAdapter(@NonNull Context context, int resource, @NonNull ArrayList<UsuarioFecha> objects) {
+    public MiAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Usuario> objects) {
         super(context, resource, objects);
         this.context = context;
         imagenLayout = resource;

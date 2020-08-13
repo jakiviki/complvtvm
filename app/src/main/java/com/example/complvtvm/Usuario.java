@@ -1,6 +1,6 @@
 package com.example.complvtvm;
 
-public class UsuarioFecha {
+public class Usuario {
     public int imagen;
     public String nombre;
     public int hora;
@@ -8,19 +8,19 @@ public class UsuarioFecha {
     public int mes;
     public int anio;
 
-    public UsuarioFecha(){
+    public Usuario(){
 
     }
 
 
-    public UsuarioFecha(String nom,int hora,int dia,int mes,int anio){
+    public Usuario(String nom, int hora, int dia, int mes, int anio){
         this.nombre = nom;
         this.hora = hora;
         this.dia = dia;
         this.anio = anio;
     }
 
-    public UsuarioFecha(String nombre, int imagen){
+    public Usuario(String nombre, int imagen){
         this.imagen = imagen;
         this.nombre = nombre;
     }

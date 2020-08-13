@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,32 +28,43 @@ public class BoxActivity extends AppCompatActivity implements AdapterView.OnItem
     ListView listView;
     ArrayList<String> horarios;
     SharedPreferences sharedPreferences;
+    SharedPreferences mAforoCarmelo,mHorarioCarmelo;
     int item;
+    TextView mTxvAforo;
+    ListadoDeHoras listaHoras;
 
-    int clase0 = 0;
-    int clase1 = 1;
-    int clase2 = 2;
-    int clase3 = 3;
-    int clase4 = 4;
-    int clase5 = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box);
 
+        mTxvAforo = findViewById(R.id.n_aforo);
         boton = findViewById(R.id.id_botonBox_peque);
         listView = findViewById(R.id.id_lisView_box_peque);
-        sharedPreferences = getSharedPreferences("shared_horas_box",MODE_PRIVATE);// SOLO ES LA INSTANCIA
+        sharedPreferences = getSharedPreferences("complutum",MODE_PRIVATE);// SOLO ES LA INSTANCIA
 
+        // LOGICA PARA EL AFORO CREADO POR CARMELO
+        mAforoCarmelo = getSharedPreferences("complutum",MODE_PRIVATE);
+        String aforo = mAforoCarmelo.getString("aforo","8");
+        Log.i("aforo",aforo);
+        mTxvAforo.setText(aforo);
+
+        // LOGICA PARA EL HORARIO DE CARMELO
+        mHorarioCarmelo = getSharedPreferences("complutum",MODE_PRIVATE);
+        String json = mHorarioCarmelo.getString("horarios_shared","");
         horarios = new ArrayList<>();
-        horarios.add("9:30");
-        horarios.add("17:30");
-        horarios.add("18:30");
-        horarios.add("19:30");
-        horarios.add("20:30");
-        horarios.add("21:30");
-        horarios.add("22:30");
+        if(json.isEmpty()){
+            horarios.add("8:30");
+        }else{
+            listaHoras = new ListadoDeHoras();
+            listaHoras = listaHoras.fromJson(json);
+            for(Hora h: listaHoras.mListHorarios){
+                horarios.add(h.getHora());
+            }
+        }
+
+
 
         // 1 creamos el adapter
         ListAdapter adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,horarios);
@@ -60,6 +72,8 @@ public class BoxActivity extends AppCompatActivity implements AdapterView.OnItem
         listView.setAdapter(adapter);
         // añadimos un evento click a la listView
         listView.setOnItemClickListener(this);
+
+        //todo por aqui podrias cambiar el color del horario a rojo si esta lleno
 
     }
 
@@ -71,59 +85,13 @@ public class BoxActivity extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ///String horaintem = listView.getAdapter().getItem(i).toString();
-
-        if( clase0 == i){
-            // guardo la hora en las shares
-            //SharedPreferences.Editor editor = sharedPreferences.edit();
-            //editor.putInt(String.valueOf(i),i); // mando un entero
-            //editor.apply();
-            Toast.makeText(this,"clase 0:"+i,Toast.LENGTH_LONG).show();
-        }else {
-            if(clase1 == i){
-                // guardo la hora en las shares
-                //SharedPreferences.Editor editor = sharedPreferences.edit();
-                //editor.putInt(String.valueOf(i),i); // mando un entero
-                //editor.apply();
-                Toast.makeText(this,"clase 1:"+i,Toast.LENGTH_LONG).show();
-
-            }else {
-                if(clase2 == i){
-                    // guardo la hora en las shares
-                    //SharedPreferences.Editor editor = sharedPreferences.edit();
-                    //editor.putInt(String.valueOf(i),i); // mando un entero
-                    //editor.apply();
-                    Toast.makeText(this,"clase 2:"+i,Toast.LENGTH_LONG).show();
-
-                }else {
-                    if(clase3 == i){
-                        // guardo la hora en las shares
-                       //SharedPreferences.Editor editor = sharedPreferences.edit();
-                        //editor.putInt(String.valueOf(i),i); // mando un entero
-                        //editor.apply();
-                        Toast.makeText(this,"clase 3:"+i,Toast.LENGTH_LONG).show();
-                    }else {
-                        if(clase4 == i){
-                            // guardo la hora en las shares
-                            //SharedPreferences.Editor editor = sharedPreferences.edit();
-                            //editor.putInt(String.valueOf(i),i); // mando un entero
-                            //editor.apply();
-                            Toast.makeText(this,"clase 4:"+i,Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-                }
-            }
-        }
-
 
         // mando las horas por intent por el intent
         Intent intent = new Intent(this,ListaBoxActivity.class);
-        //intent.putExtra("hora_intent",horarios.get(i));
         item = i; // variable para acceso a la lista
         intent.putExtra("item",item);
         startActivity(intent);
         Log.d("log","valor del item: "+item);
-        Toast.makeText(this,"valor de item: "+item,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Clase: "+(i+1),Toast.LENGTH_LONG).show();
     }
 }

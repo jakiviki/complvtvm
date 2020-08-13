@@ -3,9 +3,10 @@
     <string name="guerrero">Guerrer@</string>
     <string name="box">Box</string>
     <string name="apuntarme">Apuntarme</string>
-    <string name="Escribe_tu_nombre">Escribe tu nombre</string>
+    <string name="Escribe_tu_nombre">Escribe tu nombre para apuntarte</string>
     <string name="calendario">Calendario</string>
-    <string name="aforo">Aforo: </string>
+    <string name="aforo1">Aforo: </string>
+    <string name="aforo2">Aforo </string>
     <string name="numero_aforo">10 </string>
     <string name="fecha">Hoy </string>
     <string name="personas">personas</string>
@@ -13,4 +14,9 @@
     <string name="Mañana">Mañana</string>
     <string name="Horarios">Horarios</string>
     <string name="Añadir">Añadir</string>
+    <string name="añadir_horario">AÑADIR HORARIO</string>
+    <string name="añadir_aforo">AÑADIR AFORO</string>
+    <string name="ya_estas_apuntado">Te has apuntado a esta hora</string>
+
+
 </resources>
