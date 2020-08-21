@@ -25,7 +25,9 @@ public class ListaDojoActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     Usuario nuevoUsuario;
     ListUsuarios mListUsuarios;
+    ListaUsuariosMañana listaUsuariosManana;
     Boolean mApuntado = false;
+    String dia;
     int itemAsignado;
 
 
@@ -37,6 +39,10 @@ public class ListaDojoActivity extends AppCompatActivity {
         editText = findViewById(R.id.id_edit_nom_dojo);
         boton = findViewById(R.id.id_boton_apun_dojo);
         listView = findViewById(R.id.id_lisView_apun_dojo);
+        usuariosFechas = new ArrayList<>();
+        mListUsuarios = new ListUsuarios();
+        listaUsuariosManana = new ListaUsuariosMañana();
+        dia = "h";
 
         // recupero las sharedPreferences
         mShared = getSharedPreferences("complutum",MODE_PRIVATE);  // lectura de disco
@@ -45,199 +51,506 @@ public class ListaDojoActivity extends AppCompatActivity {
         // recupero el intent
         Intent intent = getIntent();
         itemAsignado = intent.getIntExtra("item",0);
-        Log.d("log","itemAsignado es: "+itemAsignado);
+        dia = intent.getStringExtra("dia");
 
-        usuariosFechas = new ArrayList<>();
-        usuariosFechas.add(new Usuario("Carmelo",R.drawable.iconojpg));
+        Log.i("complu","oncreate listabox itemAsignado es: "+itemAsignado);
+        Log.i("complu","oncreate listabox valor del inten dia "+dia);
 
-        // Instancio la variable listaUsuarios
-        mListUsuarios = new ListUsuarios();
+        String jm = mShared.getString("clase1_dojo_h","");
+        boolean okborradoCarmelo = mShared.getBoolean("okBorradoCarmelo",true);
+        Log.i("complu","listaBox/oncreate  valor de okBorradoCarmelo = "+okborradoCarmelo);
+
+
+
 
         // usamos el swich para dar una clave diferente a las shared
-        switch (itemAsignado+1){
+        switch (itemAsignado){
             case 1:
-                // llamo a las shared para mostrarlas en el activity
-                String json = mShared.getString("clase1_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json = mShared.getString("clase1_dojo_h","");
+                String jsonM = mShared.getString("clase1_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!jsonM.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(jsonM);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 2:
-                // llamo a las shared para mostrarlas en el activity
-                String json2 = mShared.getString("clase2_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json2.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json2);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json2 = mShared.getString("clase2_dojo_h","");
+                String json2M = mShared.getString("clase2_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json2.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json2);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json2M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json2M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
 
                 break;
             case 3:
 
-                // llamo a las shared para mostrarlas en el activity
-                String json3 = mShared.getString("clase3_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json3.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json3);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json3 = mShared.getString("clase3_dojo_h","");
+                String json3M = mShared.getString("clase3_dojo_m", "");
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json3.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json3);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json3M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json3M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 4:
-                // llamo a las shared para mostrarlas en el activity
-                String json4 = mShared.getString("clase4_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json4.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json4);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json4 = mShared.getString("clase4_dojo_h","");
+                String json4M = mShared.getString("clase4_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json4.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json4);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json4M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json4M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 5:
-                // llamo a las shared para mostrarlas en el activity
-                String json5 = mShared.getString("clase5_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json5.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json5);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json5 = mShared.getString("clase5_dojo_h","");
+                String json5M = mShared.getString("clase5_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json5.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json5);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json5M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json5M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
 
                 break;
             case 6:
-                // llamo a las shared para mostrarlas en el activity
-                String json6 = mShared.getString("clase6_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json6.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json6);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json6 = mShared.getString("clase6_dojo_h","");
+                String json6M = mShared.getString("clase6_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json6.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json6);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json6M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json6M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 7:
                 // llamo a las shared para mostrarlas en el activity
-                String json7 = mShared.getString("clase7_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json7.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json7);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json7 = mShared.getString("clase7_dojo_h","");
+                String json7M = mShared.getString("clase7_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json7.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json7);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
                     }
                 }
 
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json7M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json7M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
+                    }
+                }
                 break;
             case 8:
-                // llamo a las shared para mostrarlas en el activity
-                String json8 = mShared.getString("clase8_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json8.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json8);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json8 = mShared.getString("clase8_dojo_h","");
+                String json8M = mShared.getString("clase8_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json8.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json8);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
                     }
                 }
 
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json8M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json8M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
+                    }
+                }
                 break;
             case 9:
-                // llamo a las shared para mostrarlas en el activity
-                String json9 = mShared.getString("clase9_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json9.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json9);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json9 = mShared.getString("clase9_dojo_h","");
+                String json9M = mShared.getString("clase9_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json9.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json9);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json9M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json9M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
 
                 break;
             case 10:
 
-                // llamo a las shared para mostrarlas en el activity
-                String json10 = mShared.getString("clase10_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json10.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json10);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json10 = mShared.getString("clase10_dojo_h","");
+                String json10M = mShared.getString("clase10_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json10.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json10);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json10M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json10M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 11:
-                // llamo a las shared para mostrarlas en el activity
-                String json11 = mShared.getString("clase11_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json11.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json11);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json11 = mShared.getString("clase11_dojo_h","");
+                String json11M = mShared.getString("clase11_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json11.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json11);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json11M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json11M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
 
                 break;
             case 12:
-                // llamo a las shared para mostrarlas en el activity
-                String json12 = mShared.getString("clase12_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json12.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json12);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json12 = mShared.getString("clase12_dojo_h","");
+                String json12M = mShared.getString("clase12_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json12.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json12);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json12M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json12M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 13:
                 // llamo a las shared para mostrarlas en el activity
-                String json13 = mShared.getString("clase13_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json13.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json13);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json13 = mShared.getString("clase13_dojo_h","");
+                String json13M = mShared.getString("clase13_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json13.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json13);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json13M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json13M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 14:
 
-                // llamo a las shared para mostrarlas en el activity
-                String json14 = mShared.getString("clase14_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json14.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json14);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json14 = mShared.getString("clase14_dojo_h","");
+                String json14M = mShared.getString("clase14_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json14.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json14);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json14M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json14M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
                 break;
             case 15:
-                // llamo a las shared para mostrarlas en el activity
-                String json15 = mShared.getString("clase15_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json15.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json15);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json15 = mShared.getString("clase15_dojo_h","");
+                String json15M = mShared.getString("clase15_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json15.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json15);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json15M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json15M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
 
                 break;
             case 16:
-                // llamo a las shared para mostrarlas en el activity
-                String json16 = mShared.getString("clase16_dojo","");
-                // miro si viene lleno y lo añado a la lista
-                if ( !json16.isEmpty()){
-                    mListUsuarios= mListUsuarios.fromJson(json16);
-                    for(Usuario u: mListUsuarios.mListUsuarios){
-                        usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                // recupero el json de las shared
+                String json16 = mShared.getString("clase16_dojo_h","");
+                String json16M = mShared.getString("clase16_dojo_m", "");
+
+
+                if (dia.equals("h")){   // valido si es h= hoy
+                    if(!json16.isEmpty()){
+                        mListUsuarios = mListUsuarios.fromJson(json16);
+                        Log.i("complu","clase1 listabox valor de json"+mListUsuarios);
+                        for(Usuario u: mListUsuarios.mListUsuarios){
+                            usuariosFechas.add(new Usuario(u.nombre,u.imagen));
+                            Log.i("complu","estoy dentro del for de 1h y añado los usuario");
+                        }
+                        Log.i("complu","entra en el if de h");
+                    }
+                }
+
+                if (dia.equals("m")){  // valido si m es = mañana
+                    if(!json16M.isEmpty()){
+                        listaUsuariosManana = listaUsuariosManana.fromJson(json16M);
+                        Log.i("complu","clase1 listabox valor de jsonM"+listaUsuariosManana);
+                        for (Usuario u : listaUsuariosManana.mListUsuariosMañana) {
+                            usuariosFechas.add(new Usuario(u.nombre, u.imagen));
+                            Log.i("complu", "estoy dentro del for de 1m y añado los usuario");
+                        }
+                        Log.i("complu", "entra en el if de m " + listaUsuariosManana);
                     }
                 }
 
@@ -261,158 +574,860 @@ public class ListaDojoActivity extends AppCompatActivity {
         String nombre = editText.getText().toString();
 
         // compruebo que ya te has apuntado
-        if(mApuntado){
+        if(mApuntado && !nombre.isEmpty()){
             Toast.makeText(this,nombre+" ya te has apuntado",Toast.LENGTH_LONG).show();
         }
 
 
         if(!mApuntado && !nombre.isEmpty()) {
+            // para mostrar inmediatamente
             nuevoUsuario = new Usuario(nombre, R.drawable.iconojpg);
-            usuariosFechas.add(nuevoUsuario);
 
             // usamos el swich para dar una clave diferente a las shared
             switch (itemAsignado+1){
                 case 1:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase1_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c1hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase1_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c1hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c1md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase1_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c1md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
+
                     break;
                 case 2:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase2_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
 
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c2hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase2_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c2hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c2md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase2_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c2md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
                     break;
                 case 3:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase3_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
 
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c3hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase3_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c3hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c3md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase3_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c3md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
                     break;
                 case 4:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase4_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c4hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase4_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c4hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c4md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase4_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c4md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 5:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase5_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c5hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase5_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c5hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c5md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase5_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c5md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 6:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase6_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c6hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase6_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c6hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c6md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase6_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c6md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 7:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase7_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c7hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase7_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c7hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c7md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase7_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c7md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 8:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase8_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c8hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase8_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c8hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c8md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase8_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c8md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 9:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase9_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c9hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase9_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c9hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c9md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase9_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c9md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 10:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase10_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c10hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase10_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c10hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c10md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase10_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c10md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 11:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase11_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c11hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase11_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c11hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c11md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase11_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c11md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 12:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase12_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
 
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c12hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase12_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c12hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c12md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase12_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c12md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
                     break;
                 case 13:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase13_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c13hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase13_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c13hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c13md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase13_box_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c13md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 14:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase14_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c14hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase14_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c14hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c14md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase14_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c14md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 15:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase15_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c15hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase15_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c15hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c15md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase15_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c15md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 case 16:
-                    // guardo en la lista el nuevo usuario y luego guardo la lista en las shared
-                    mListUsuarios.mListUsuarios.add(nuevoUsuario);
-                    editor.putString("clase16_dojo", mListUsuarios.toJson());
-                    editor.apply();
-                    Toast.makeText(this,nombre+" te hás apuntado a la clase: "+(itemAsignado+1),Toast.LENGTH_LONG).show();
-                    mApuntado = true;
+                    // miro en las shared para ver si ya se ha registrado
+                    // lo guardo en una variable y la valido con un if
+
+                    if(dia.equals("h")) {
+                        boolean ok = mShared.getBoolean("c16hd",false); // miramos en el boolean de la clase en las shared
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en esta clase hoy",Toast.LENGTH_LONG).show(); // validamos el boolean de las shared
+                        }else {
+
+                            // lo añado a la lista de usuario
+                            mListUsuarios.mListUsuarios.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase16_dojo_h", mListUsuarios.toJson());
+
+                            // cambiamos el valor a true
+                            mApuntado = true;                           // cambiamos el valor para luego cuando entro en el activity
+
+                            // lo gurdo en la shared
+                            editor.putBoolean("c16hd", mApuntado);     // creamos un boolean para validar luego arriba en esta clase
+                            editor.apply();
+
+                            Log.i("complu", "valor de lo que guardo en shared 1h: " + mListUsuarios.toJson());
+                        }
+
+                    }
+                    if (dia.equals("m")) {
+                        boolean ok = mShared.getBoolean("c16md",false);
+
+                        if(ok){
+                            Toast.makeText(this,"Ya estas apuntado en la clase de mañana",Toast.LENGTH_LONG).show();
+                        }else{
+                            listaUsuariosManana.mListUsuariosMañana.add(nuevoUsuario);
+                            usuariosFechas.add(nuevoUsuario);
+
+                            // lo guardo en las shared como un string con la clase json
+                            editor.putString("clase16_dojo_m", listaUsuariosManana.toJson());
+
+                            // cambio el valor a true
+                            mApuntado = true;
+
+                            editor.putBoolean("c16md",mApuntado);
+                            editor.apply();
+
+                            Log.i("complu","valor de lo que guardo en shared 1m: "+listaUsuariosManana.toJson());
+                        }
+
+                    }
 
                     break;
                 default:

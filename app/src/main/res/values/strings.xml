@@ -17,6 +17,11 @@
     <string name="añadir_horario">AÑADIR HORARIO</string>
     <string name="añadir_aforo">AÑADIR AFORO</string>
     <string name="ya_estas_apuntado">Te has apuntado a esta hora</string>
+    <string name="Eliminar">¿Eliminar horario?</string>
+    <string name="estas_consumiendo_mucha_memoria">Estas consumiendo demasiada memoria creando tantas clases</string>
+    <string name="Te_has_apuntado_en_esta_clase">Te has apuntado en esta clase</string>
+
+    <string name="elimina_un_horario_antes_de_añadir_otro">Elimina un horario antes de añadir uno nuevo</string>
 
 
 </resources>

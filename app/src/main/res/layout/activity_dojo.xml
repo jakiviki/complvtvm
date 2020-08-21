@@ -32,8 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Mañana"
+        android:onClick="mañana"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -50,6 +52,7 @@
         android:id="@+id/id_fecha_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:text="@string/fecha"
         android:textSize="@dimen/sp25"
         app:layout_constraintStart_toStartOf="parent"
