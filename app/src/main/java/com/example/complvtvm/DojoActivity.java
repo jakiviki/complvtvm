@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DojoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -25,6 +27,7 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView listView;
     ArrayList<String> horarios;
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     SharedPreferences mAforoCarmelo,mHorarioCarmelo;
     TextView mTexvAforo;
     ListadoDeHoras listaHoras;
@@ -44,7 +47,11 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
         mfecha = findViewById(R.id.id_fecha_text);
         dia = "h";
 
+
         sharedPreferences = getSharedPreferences("shared_horas_dojo",MODE_PRIVATE);// SOLO ES LA INSTANCIA
+        editor = sharedPreferences.edit();
+
+
 
         // LOGICA PARA EL AFORO DE CARMELO
         mTexvAforo = findViewById(R.id.n_aforo_dojo);
@@ -56,7 +63,7 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
         mHorarioCarmelo = getSharedPreferences("complutum",MODE_PRIVATE);
         String json = mHorarioCarmelo.getString("horarios_shared","");
         if(json.isEmpty()){
-            horarios.add("8:30");
+            horarios.add("Hoy no hay clases");
         }else{
             listaHoras = new ListadoDeHoras();
             listaHoras = listaHoras.fromJson(json);
@@ -95,6 +102,7 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
 
         ///// cambio la variable dia a mañana
         dia = "m";
+        boton.setVisibility(listView.GONE);
 
     }
 
@@ -103,11 +111,16 @@ public class DojoActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // mando las horas por intent por el intent
         Intent intent = new Intent(this,ListaDojoActivity.class);
-        item = i+1;                  // variable para acceso a la lista = 1
+        item = i+1;                  // variable para acceso a la lista  i = 0
+
+        // extraigo el texto de la lista
+        TextView textView = view.findViewById(R.id.mi_item);
+        String  texV = textView.getText().toString();
+
+        // mando los iten a la pantalla de listDojo
         intent.putExtra("item",item);
         intent.putExtra("dia",dia);
-        TextView textView = view.findViewById(R.id.mi_item);
-        String textoTv = textView.getText().toString();
+        intent.putExtra("textoDj",texV);
         startActivity(intent);
 
 

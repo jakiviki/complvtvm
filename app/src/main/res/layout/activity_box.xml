@@ -41,10 +41,15 @@
 
     <TextView
         android:id="@+id/id_aforo"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:padding="2dp"
         android:text="@string/aforo1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="@dimen/sp25"
         app:layout_constraintStart_toEndOf="@+id/id_fecha_text"
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />
@@ -54,7 +59,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:padding="2dp"
         android:text="@string/fecha"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="@dimen/sp25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />
@@ -64,7 +73,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:padding="2dp"
         android:text="@string/numero_aforo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="@dimen/sp25"
         app:layout_constraintStart_toEndOf="@+id/id_aforo"
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />
@@ -74,7 +87,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:padding="2dp"
         android:text="@string/personas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="@dimen/sp25"
         app:layout_constraintStart_toEndOf="@+id/n_aforo"
         app:layout_constraintTop_toBottomOf="@+id/id_img_box_peque" />

@@ -23,7 +23,7 @@ public class HomeCarmeloActivity extends AppCompatActivity implements AdapterVie
     ArrayList<String> horarios = new ArrayList<>();
     ListView listView;
     Button btn;
-    public String mAforo;
+    int  nAforo;
     ListadoDeHoras mHoras;
     int position;
     int tope;
@@ -32,6 +32,8 @@ public class HomeCarmeloActivity extends AppCompatActivity implements AdapterVie
     // DECLARACION DE LAS SHAREDPREFERENCES
     SharedPreferences mPrefs;
     SharedPreferences.Editor mEditor;
+
+    // todo hacer que todas las variables tengan el valor de las shared
 
 
     @Override
@@ -168,7 +170,7 @@ public class HomeCarmeloActivity extends AppCompatActivity implements AdapterVie
                    int nuevaClave = claveShared +1;
                    mEditor.putInt("clave",nuevaClave);
                    mEditor.apply();
-                   Toast.makeText(this,"clave nueva if= "+nuevaHora.getClaveHora(),Toast.LENGTH_LONG).show();
+                   Log.i("complu","HomeCarmelo/agregar  Añadiendo una clave nueva= "+nuevaHora.getClaveHora());
                } else
                     {
                        if(claveShared <16){
@@ -217,6 +219,9 @@ public class HomeCarmeloActivity extends AppCompatActivity implements AdapterVie
         mPrefs = getSharedPreferences("complutum",MODE_PRIVATE);
         mEditor = mPrefs.edit();
         mEditor.putString("aforo",aforo);
+        // combierto el aforo String en integer para usarlo en las clases
+        nAforo =Integer.parseInt(aforo);
+        mEditor.putInt("nAforo",nAforo);
         mEditor.apply();
     }
 
@@ -239,7 +244,7 @@ public class HomeCarmeloActivity extends AppCompatActivity implements AdapterVie
             editor.apply();
             Log.i("complu","//////////bajando_1_el_tope valor de tope = "+tope);
         }
-        // todo sigue por aqui intentando que la hora sea la misma que el ttexto
+
         for (Hora h: mHoras.mListHorarios) {
 
             if(h.hora.equals(texto)) {
@@ -514,4 +519,7 @@ public class HomeCarmeloActivity extends AppCompatActivity implements AdapterVie
 
         }
     }
+
+    // metodo para eliminar la actividad y que cuando salga de esta no se muestre el dialog
+
 }

@@ -34,7 +34,6 @@ public class MiAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // lo metemos dentro del if para que no cree las vistat cada vez y reutilize el codigo
         if(convertView == null) {
-            Log.d("main", "veces " + position);
             // creamos la vista con el metodo inflater
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(imagenLayout, parent, false); // muy importante el false si no se pone puede fallar

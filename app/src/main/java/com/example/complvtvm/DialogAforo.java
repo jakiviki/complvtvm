@@ -53,7 +53,7 @@ public class DialogAforo extends DialogFragment {
                 HomeCarmeloActivity nuevoActivity = (HomeCarmeloActivity) getActivity();
                 nuevoActivity.nuevoAforo(editText.getText().toString());
 
-                Log.i("horario","valor del nuevo horario es de: "+nuevoActivity);
+                Log.i("complu","valor del nuevo aforCarmelo es de: "+nuevoActivity);
                 dismiss();
             }
         });

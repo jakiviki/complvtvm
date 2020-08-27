@@ -33,7 +33,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void homeCarmelo (View v){
+        /*
+        // para ir directo a la pantalla de carmelo sin pasar por el dialog
         Intent intent = new Intent(this, HomeCarmeloActivity.class);
         startActivity(intent);
+
+         */
+
+        DialogLogin login = new DialogLogin();
+        login.show(getSupportFragmentManager(),"accesoHomeCarmelo");
     }
 }

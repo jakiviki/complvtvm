@@ -2,6 +2,7 @@
     <string name="app_name">Complvtvm</string>
     <string name="guerrero">Guerrer@</string>
     <string name="box">Box</string>
+    <string name="Hoy_no_hay_clases">Hoy no hay clases</string>
     <string name="apuntarme">Apuntarme</string>
     <string name="Escribe_tu_nombre">Escribe tu nombre para apuntarte</string>
     <string name="calendario">Calendario</string>
@@ -22,6 +23,7 @@
     <string name="Te_has_apuntado_en_esta_clase">Te has apuntado en esta clase</string>
 
     <string name="elimina_un_horario_antes_de_añadir_otro">Elimina un horario antes de añadir uno nuevo</string>
+    <string name="aforo_completo">Aforo completo</string>
 
 
 </resources>

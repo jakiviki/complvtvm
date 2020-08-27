@@ -26,11 +26,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="40dp"
-        android:background="@color/negro"
+        android:background="@drawable/ovalo"
         android:onClick="homeCarmelo"
         android:text="Maestro"
         android:textColor="@color/rojonegro"
-        android:textSize="@dimen/dp30"
+        android:textSize="@dimen/dp20"
+        android:padding="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -40,12 +41,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/ovalo"
         android:onClick="clickGuerrero"
+        android:padding="@dimen/dp_10"
         android:text="@string/guerrero"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/rojonegro"
-        android:textSize="@dimen/dp30"
+        android:textSize="@dimen/dp20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/id_maestro" />
 

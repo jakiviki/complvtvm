@@ -3,7 +3,6 @@ package com.example.complvtvm;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +35,7 @@ public class DialogCarmelo extends DialogFragment {
 
         // accedemos a los objetos de la vista
         final EditText editText = dialogView.findViewById(R.id.edtx_dialog_carmelo);
-        Button btnCancelar = (Button) dialogView.findViewById(R.id.btn_cancelar);
+        Button btnCancelar = (Button) dialogView.findViewById(R.id.btn_cancelar_login);
         Button btnOk = (Button) dialogView.findViewById(R.id.button_dialog_añadir);
 
         builder.setView(dialogView)

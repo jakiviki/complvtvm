@@ -5,5 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="rojonegro">#E80707</color>
     <color name="negro">#170004</color>
+    <color name="negro_rojo">#2C0008</color>
     <color name="negro_tool_bar">#5C0111</color>
+    <color name="negro_tool_bar_superiior">#49010E</color>
 </resources>
